@@ -7,4 +7,24 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Media\close.png" />
+    <None Remove="Media\logo.jpg" />
+    <None Remove="Media\maximize.png" />
+    <None Remove="Media\minimize.png" />
+    <None Remove="Media\search.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="MVVM\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Media\close.png" />
+    <Resource Include="Media\logo.jpg" />
+    <Resource Include="Media\maximize.png" />
+    <Resource Include="Media\minimize.png" />
+    <Resource Include="Media\search.png" />
+  </ItemGroup>
+
 </Project>

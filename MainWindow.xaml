@@ -5,8 +5,54 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:prog3_kursach"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        WindowStyle="None" WindowState="Maximized"
+        
+        xmlns:userControls="clr-namespace:prog3_kursach.View"
+        
+        Title="Музыкальная библиотека" Height="450" Width="800">
+    
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32" />
+            <RowDefinition />
+            <RowDefinition Height="1" />
+            <RowDefinition Height="64" />
+        </Grid.RowDefinitions>
 
+        <Grid Name="gridTopPanel" MouseLeftButtonDown="gridTopPanel_MouseLeftButtonDown">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="120" />
+            </Grid.ColumnDefinitions>
+            
+            <userControls:Logo />
+            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Panel.ZIndex="100">
+                <Button Name="buttonMinimize" Click="buttonMinimize_Click" Style="{StaticResource ControlButton}" Content="{StaticResource minimizeIcon}" />
+                <Button Name="buttonMaximize" Click="buttonMaximize_Click" Style="{StaticResource ControlButton}" Content="{StaticResource maximizeIcon}" />
+                <Button Name="buttonClose" Click="buttonClose_Click" Style="{StaticResource ControlButton}" Content="{StaticResource closeIcon}" />
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="250" />
+                <ColumnDefinition Width="1" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="0,10,0,0" ScrollViewer.VerticalScrollBarVisibility="Auto" CanVerticallyScroll="True">
+                <Button Content="Мои треки" Style="{StaticResource LinkButton}" />
+                <Button Content="Мои альбомы" Style="{StaticResource LinkButton}" />
+                <Button Content="Мои плейлисты" Style="{StaticResource LinkButton}" />
+                <Button Content="Каталог" Style="{StaticResource LinkButton}" />
+                <Button Content="Редактирование" Style="{StaticResource LinkButton}" />
+            </StackPanel>
+            <GridSplitter Grid.Column="1" Background="Black" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsEnabled="False" />
+            <StackPanel Grid.Column="2" Orientation="Vertical" Margin="40,20">
+                <userControls:Search Margin="0,0,0,20" />
+                <Frame Name="frame" Source="View/MyLibraryPage.xaml" />
+            </StackPanel>
+        </Grid>
+        <GridSplitter Grid.Row="2" Background="Black" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  IsEnabled="False" />
+        <userControls:AudioPlayer Grid.Row="3" />
     </Grid>
 </Window>

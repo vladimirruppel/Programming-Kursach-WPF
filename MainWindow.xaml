@@ -27,9 +27,9 @@
             
             <userControls:Logo />
             <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Panel.ZIndex="100">
-                <Button Name="buttonMinimize" Click="buttonMinimize_Click" Style="{StaticResource ControlButton}" Content="{StaticResource minimizeIcon}" />
-                <Button Name="buttonMaximize" Click="buttonMaximize_Click" Style="{StaticResource ControlButton}" Content="{StaticResource maximizeIcon}" />
-                <Button Name="buttonClose" Click="buttonClose_Click" Style="{StaticResource ControlButton}" Content="{StaticResource closeIcon}" />
+                <Button Name="buttonMinimize" Command="{Binding MinimizeWindowCommand}" Style="{StaticResource ControlButton}" Content="{StaticResource minimizeIcon}" />
+                <Button Name="buttonMaximize" Command="{Binding MaximizeWindowCommand}" Style="{StaticResource ControlButton}" Content="{StaticResource maximizeIcon}" />
+                <Button Name="buttonClose" Command="{Binding CloseWindowCommand}" Style="{StaticResource ControlButton}" Content="{StaticResource closeIcon}" />
             </StackPanel>
         </Grid>
         <Grid Grid.Row="1">

@@ -7,6 +7,18 @@ namespace prog3_kursach.ViewModel
     {
         public Window window { get; set; }
 
+        private string framePath = "View/MainPage.xaml";
+
+        public string FramePath
+        {
+            get { return framePath; }
+            set 
+            { 
+                framePath = value;
+                OnPropertyChanged();
+            }
+        }
+
         public MainWindowViewModel(Window window)
         {
             this.window = window;
@@ -15,6 +27,8 @@ namespace prog3_kursach.ViewModel
         public RelayCommand CloseWindowCommand => new RelayCommand(execute => CloseWindow());
         public RelayCommand MaximizeWindowCommand => new RelayCommand(execute => MaximizeWindow());
         public RelayCommand MinimizeWindowCommand => new RelayCommand(execute => MinimizeWindow());
+        public RelayCommand OpenPageCommand => new RelayCommand(pageName => OpenPage(pageName));
+        public RelayCommand DragMoveWindowCommand => new RelayCommand(execute => DragMoveWindow());
 
         private void CloseWindow()
         {
@@ -29,6 +43,15 @@ namespace prog3_kursach.ViewModel
         private void MinimizeWindow()
         {
             window.WindowState = WindowState.Minimized;
+        }
+        private void OpenPage(object pageName)
+        {
+            string pathToPage = $"View/{pageName as string}Page.xaml";
+            FramePath = pathToPage;
+        }
+        private void DragMoveWindow()
+        {
+            window.DragMove();
         }
     }
 }

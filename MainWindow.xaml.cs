@@ -11,10 +11,5 @@ namespace prog3_kursach
             MainWindowViewModel viewModel = new MainWindowViewModel(this);
             DataContext = viewModel;
         }
-
-        private void gridTopPanel_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            DragMove();
-        }
     }
 }

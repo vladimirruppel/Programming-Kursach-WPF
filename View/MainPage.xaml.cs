@@ -18,9 +18,9 @@ namespace prog3_kursach.View
     /// <summary>
     /// Логика взаимодействия для MyLibraryPage.xaml
     /// </summary>
-    public partial class MyLibraryPage : Page
+    public partial class MainPage : Page
     {
-        public MyLibraryPage()
+        public MainPage()
         {
             InitializeComponent();
         }

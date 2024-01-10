@@ -20,6 +20,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.77" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Media\close.png" />
     <Resource Include="Media\logo.jpg" />
     <Resource Include="Media\maximize.png" />

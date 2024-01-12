@@ -5,10 +5,14 @@ namespace prog3_kursach.ViewModel
 {
     class MainWindowViewModel : ViewModelBase
     {
-        public Window window { get; set; }
+        private static string GetPagePath(string pageName)
+        {
+            return $"View/{pageName}Page.xaml";
+        }
 
-        private string framePath = "View/MainPage.xaml";
+        private Window window;
 
+        private string framePath = GetPagePath("Main");
         public string FramePath
         {
             get { return framePath; }
@@ -46,8 +50,8 @@ namespace prog3_kursach.ViewModel
         }
         private void OpenPage(object pageName)
         {
-            string pathToPage = $"View/{pageName as string}Page.xaml";
-            FramePath = pathToPage;
+            if (pageName != null)
+                FramePath = GetPagePath(pageName as string);
         }
         private void DragMoveWindow()
         {

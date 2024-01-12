@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              Height="32" d:DesignWidth="800" FontSize="16">
     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-        <Image Source="/Media/logo.jpg" Height="30" Margin="0,0,5,0"/>
+        <Image Source="/Images/logo.jpg" Height="30" Margin="0,0,5,0"/>
         <TextBlock Text="Музыкальная библиотека" VerticalAlignment="Center" FontSize="18" />
     </StackPanel>
 </UserControl>

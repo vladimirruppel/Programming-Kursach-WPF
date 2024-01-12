@@ -8,11 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Media\close.png" />
-    <None Remove="Media\logo.jpg" />
-    <None Remove="Media\maximize.png" />
-    <None Remove="Media\minimize.png" />
-    <None Remove="Media\search.png" />
+    <None Remove="Images\close.png" />
+    <None Remove="Images\default-cover.png" />
+    <None Remove="Images\like.png" />
+    <None Remove="Images\logo.jpg" />
+    <None Remove="Images\maximize.png" />
+    <None Remove="Images\minimize.png" />
+    <None Remove="Images\not-like.png" />
+    <None Remove="Images\search.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,11 +28,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Media\close.png" />
-    <Resource Include="Media\logo.jpg" />
-    <Resource Include="Media\maximize.png" />
-    <Resource Include="Media\minimize.png" />
-    <Resource Include="Media\search.png" />
+    <Resource Include="Images\close.png" />
+    <Resource Include="Images\default-cover.png" />
+    <Resource Include="Images\like.png" />
+    <Resource Include="Images\logo.jpg" />
+    <Resource Include="Images\maximize.png" />
+    <Resource Include="Images\minimize.png" />
+    <Resource Include="Images\not-like.png" />
+    <Resource Include="Images\search.png" />
   </ItemGroup>
 
 </Project>

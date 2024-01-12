@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace prog3_kursach.MVVM
 {
-    internal class ViewModelBase : INotifyPropertyChanged
+    public class ViewModelBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)

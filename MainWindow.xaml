@@ -25,9 +25,6 @@
                 <b:EventTrigger EventName="MouseLeftButtonDown">
                     <b:InvokeCommandAction Command="{Binding DragMoveWindowCommand}" />
                 </b:EventTrigger>
-                <b:EventTrigger EventName="MouseDoubleClick">
-                    <b:InvokeCommandAction Command="{Binding MaximizeWindowCommand}" />
-                </b:EventTrigger>
             </b:Interaction.Triggers>
 
             <Grid.ColumnDefinitions>
@@ -35,7 +32,13 @@
                 <ColumnDefinition Width="120" />
             </Grid.ColumnDefinitions>
 
-            <userControls:Logo />
+            <userControls:Logo>
+                <b:Interaction.Triggers>
+                    <b:EventTrigger EventName="MouseDoubleClick">
+                        <b:InvokeCommandAction Command="{Binding MaximizeWindowCommand}" />
+                    </b:EventTrigger>
+                </b:Interaction.Triggers>
+            </userControls:Logo>
             <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Panel.ZIndex="100">
                 <Button Name="buttonMinimize" Command="{Binding MinimizeWindowCommand}" Style="{StaticResource ControlButton}" Content="{StaticResource minimizeIcon}" />
                 <Button Name="buttonMaximize" Command="{Binding MaximizeWindowCommand}" Style="{StaticResource ControlButton}" Content="{StaticResource maximizeIcon}" />
@@ -59,7 +62,7 @@
             <GridSplitter Grid.Column="1" Background="Black" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsEnabled="False" />
             <StackPanel Grid.Column="2" Orientation="Vertical" Margin="40,20">
                 <userControls:Search Margin="0,0,0,20" />
-                <Frame Name="frame" Source="{Binding FramePath, UpdateSourceTrigger=PropertyChanged}"/>
+                <Frame NavigationUIVisibility="Hidden"  Name="frame" Source="{Binding FramePath, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
         </Grid>
         <GridSplitter Grid.Row="2" Background="Black" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  IsEnabled="False" />

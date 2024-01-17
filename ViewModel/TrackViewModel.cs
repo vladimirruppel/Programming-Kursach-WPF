@@ -34,9 +34,11 @@ namespace prog3_kursach.ViewModel
             Track = track;
 
             ToggleTrackCommand = new RelayCommand(execute => ToggleTrack());
+            PlayCommand = new RelayCommand(execute => Play());
         }
 
         public RelayCommand ToggleTrackCommand { get; }
+        public RelayCommand PlayCommand { get; }
 
         private void ToggleTrack()
         {
@@ -49,6 +51,11 @@ namespace prog3_kursach.ViewModel
 
                 Track = track;
             }
+        }
+
+        private void Play()
+        {
+            AudioPlayerViewModel.Instance.Play(ArtistName);
         }
     }
 }

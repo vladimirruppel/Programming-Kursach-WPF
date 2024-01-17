@@ -9,6 +9,7 @@
         WindowStyle="None" WindowState="Maximized"
         
         xmlns:userControls="clr-namespace:prog3_kursach.View"
+        xmlns:viewModels="clr-namespace:prog3_kursach.ViewModel"
         
         Title="Музыкальная библиотека" Height="450" Width="800">
     
@@ -66,6 +67,6 @@
             </StackPanel>
         </Grid>
         <GridSplitter Grid.Row="2" Background="Black" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  IsEnabled="False" />
-        <userControls:AudioPlayer Grid.Row="3" />
+        <userControls:AudioPlayer Grid.Row="3" DataContext="{x:Static viewModels:AudioPlayerViewModel.Instance}" />
     </Grid>
 </Window>

@@ -3,7 +3,7 @@ using System.Windows.Input;
 
 namespace prog3_kursach.MVVM
 {
-    internal class RelayCommand : ICommand
+    public class RelayCommand : ICommand
     {
         private Action<object> execute;
         private Func<object, bool> canExecute;

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using prog3_kursach.Model;
 using prog3_kursach.MVVM;
-using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace prog3_kursach.ViewModel
@@ -10,36 +10,24 @@ namespace prog3_kursach.ViewModel
     {
         ApplicationContext db = new ApplicationContext();
 
-        private ObservableCollection<Track> tracks = new ObservableCollection<Track>();
-        public ObservableCollection<Track> Tracks
-        {
-            get { return tracks; }
-            set 
-            { 
-                tracks = value;
-                OnPropertyChanged();
-            }
-        }
+        private readonly ObservableCollection<TrackViewModel> tracks;
+        public IEnumerable<TrackViewModel> Tracks => tracks;
 
         public RelayCommand PageLoadedCommand => new RelayCommand(execute => OnPageLoaded());
-        public RelayCommand ToggleTrackCommand => new RelayCommand(trackId => ToggleTrack(trackId));
+
+        public MainPageViewModel()
+        {
+            tracks = new ObservableCollection<TrackViewModel>();
+        }
 
         private void OnPageLoaded()
         {
             db.Database.EnsureCreated();
             db.Tracks.Load();
-            Tracks = db.Tracks.Local.ToObservableCollection();
-        }
 
-        private void ToggleTrack(object trackId)
-        {
-            if (trackId == null) return;
-
-            Track track = db.Tracks.Find((int)trackId);
-            if (track != null)
+            foreach (Track track in db.Tracks)
             {
-                track.IsAdded = !track.IsAdded;
-                db.SaveChanges();
+                tracks.Add(new TrackViewModel(track));
             }
         }
     }

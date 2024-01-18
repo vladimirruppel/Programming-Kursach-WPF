@@ -15,6 +15,7 @@
     <None Remove="Images\maximize.png" />
     <None Remove="Images\minimize.png" />
     <None Remove="Images\not-like.png" />
+    <None Remove="Images\play-track-view.png" />
     <None Remove="Images\search.png" />
   </ItemGroup>
 
@@ -35,6 +36,7 @@
     <Resource Include="Images\maximize.png" />
     <Resource Include="Images\minimize.png" />
     <Resource Include="Images\not-like.png" />
+    <Resource Include="Images\play-track-view.png" />
     <Resource Include="Images\search.png" />
   </ItemGroup>
 

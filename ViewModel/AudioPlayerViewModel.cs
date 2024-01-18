@@ -1,4 +1,5 @@
-﻿using prog3_kursach.MVVM;
+﻿using prog3_kursach.Model;
+using prog3_kursach.MVVM;
 
 namespace prog3_kursach.ViewModel
 {
@@ -22,9 +23,9 @@ namespace prog3_kursach.ViewModel
             }
         }
 
-        public void Play(string someString)
+        public void Play(Track track)
         {
-            TrackName = someString as string;
+            TrackName = track.TrackName;
         }
     }
 }

@@ -29,16 +29,42 @@ namespace prog3_kursach.ViewModel
         public int ReleaseYear => Track.ReleaseYear;
         public int Duration => Track.Duration;
 
+        private bool toShowPlayButton = false;
+        public bool ToShowPlayButton
+        {
+            get { return toShowPlayButton; }
+            set 
+            { 
+                toShowPlayButton = value; 
+                OnPropertyChanged();
+            }
+        }
+
+        private bool toShowCover = true;
+        public bool ToShowCover
+        {
+            get { return toShowCover; }
+            set
+            {
+                toShowCover = value;
+                OnPropertyChanged();
+            }
+        }
+
         public TrackViewModel(Track track)
         {
             Track = track;
 
             ToggleTrackCommand = new RelayCommand(execute => ToggleTrack());
             PlayCommand = new RelayCommand(execute => Play());
+            ShowPlayButtonCommand = new RelayCommand(execute => ShowPlayButton());
+            ShowCoverCommand = new RelayCommand(execute => ShowCover());
         }
 
         public RelayCommand ToggleTrackCommand { get; }
         public RelayCommand PlayCommand { get; }
+        public RelayCommand ShowPlayButtonCommand { get; }
+        public RelayCommand ShowCoverCommand { get; }
 
         private void ToggleTrack()
         {
@@ -55,7 +81,19 @@ namespace prog3_kursach.ViewModel
 
         private void Play()
         {
-            AudioPlayerViewModel.Instance.Play(ArtistName);
+            AudioPlayerViewModel.Instance.Play(Track);
+        }
+
+        private void ShowPlayButton()
+        {
+            ToShowCover = false;
+            ToShowPlayButton = true;
+        }
+
+        private void ShowCover()
+        {
+            ToShowPlayButton = false;
+            ToShowCover = true;
         }
     }
 }

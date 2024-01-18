@@ -3,16 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:local="clr-namespace:prog3_kursach.View"
              
-             xmlns:converters="clr-namespace:prog3_kursach.Converters"            
-             xmlns:viewModels="clr-namespace:prog3_kursach.ViewModel"
+             xmlns:converters="clr-namespace:prog3_kursach.Converters"
              
              mc:Ignorable="d" 
              Height="50" d:DesignWidth="800">
     <UserControl.Resources>
         <converters:BooleanToImagePathConverter x:Key="BooleanToImagePathConverter"/>
         <converters:DurationSecondsNumberToString x:Key="DurationSecondsNumberToString"/>
+        <converters:BooleanToVisibilityPropertyConverter x:Key="BooleanToVisibilityPropertyConverter"/>
         <Style TargetType="Button">
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="BorderThickness" Value="0" />
@@ -21,7 +22,15 @@
             <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
     </UserControl.Resources>
-    <Grid HorizontalAlignment="Stretch">
+    <Grid HorizontalAlignment="Stretch" Background="Transparent">
+        <b:Interaction.Triggers>
+            <b:EventTrigger EventName="MouseEnter">
+                <b:InvokeCommandAction Command="{Binding ShowPlayButtonCommand}" />
+            </b:EventTrigger>
+            <b:EventTrigger EventName="MouseLeave">
+                <b:InvokeCommandAction Command="{Binding ShowCoverCommand}" />
+            </b:EventTrigger>
+        </b:Interaction.Triggers>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="60" />
             <ColumnDefinition Width="2*" />
@@ -31,13 +40,19 @@
             <ColumnDefinition Width="50" />
         </Grid.ColumnDefinitions>
 
-        <!--<Image Source="pack://application:,,,/Images/default-cover.png" Width="50" Height="50" Margin="0,0,10,0" />-->
-        <Button Content="Play" Command="{Binding PlayCommand}" Margin="0,0,10,0" />
+        <Grid Margin="0,0,10,0">
+            <Image Visibility="{Binding ToShowCover, Converter={StaticResource BooleanToVisibilityPropertyConverter}}" Source="pack://application:,,,/Images/default-cover.png" Width="50" Height="50" />
+            <Button Visibility="{Binding ToShowPlayButton, Converter={StaticResource BooleanToVisibilityPropertyConverter}}" Command="{Binding PlayCommand}">
+                <Button.Content>
+                    <Image Source="pack://application:,,,/Images/play-track-view.png" Width="40" Height="40" />
+                </Button.Content>
+            </Button>
+        </Grid>
         <TextBlock Grid.Column="1" Text="{Binding TrackName}" Margin="0,0,10,0" />
         <TextBlock Grid.Column="2" Text="{Binding ArtistName}" Margin="0,0,10,0" />
         <Button Grid.Column="3" Command="{Binding ToggleTrackCommand}" Margin="0,0,10,0">
             <Button.Content>
-                <Image Source="{Binding IsAdded, Converter={StaticResource BooleanToImagePathConverter}}" IsHitTestVisible="False"/>
+                <Image Source="{Binding IsAdded, Converter={StaticResource BooleanToImagePathConverter}}"  Width="40" Height="40" IsHitTestVisible="False"/>
             </Button.Content>
         </Button>
         <TextBlock Grid.Column="4" Text="{Binding ReleaseYear}" Margin="0,0,10,0" />

@@ -4,9 +4,82 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:prog3_kursach.View"
+             
+             xmlns:converters="clr-namespace:prog3_kursach.Converters"
+             
              mc:Ignorable="d" 
              Height="64" d:DesignWidth="800">
+    <UserControl.Resources>
+        <converters:BooleanToImagePathConverter x:Key="BooleanToImagePathConverter" />
+        <converters:BooleanToVisibilityPropertyConverter x:Key="BooleanToVisbilityPropertyConverter" />
+        <converters:BooleanToMediaStateConverter x:Key="BooleanToMediaStateConverter" />
+        <converters:BooleanToPlayButtonPathConverter x:Key="BooleanToPlayButtonPathConverter" />
+        <converters:DurationSecondsNumberToString x:Key="DurationSecondsNumberToString" />
+    </UserControl.Resources>
     <Grid>
-        <TextBlock Text="{Binding TrackName}" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="auto" />
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Orientation="Horizontal" Name="LeftPanel">
+            <Button Style="{StaticResource ImageButton}">
+                <Button.Content>
+                    <Image Source="pack://application:,,,/Images/backward.png" />
+                </Button.Content>
+            </Button>
+            <Button Command="{Binding ToggleIsPlayingCommand}" Style="{StaticResource ImageButton}">
+                <Button.Content>
+                    <Image Source="{Binding IsPlaying, Converter={StaticResource BooleanToPlayButtonPathConverter}}" />
+                </Button.Content>
+            </Button>
+            <Button Style="{StaticResource ImageButton}">
+                <Button.Content>
+                    <Image Source="pack://application:,,,/Images/forward.png" />
+                </Button.Content>
+            </Button>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1.5*" />
+                    <RowDefinition Height="1*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="84" />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+
+                <Image Grid.RowSpan="2" Grid.Column="0" Source="pack://application:,,,/Images/default-cover.png" Margin="10 0 10 0" />
+                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding TrackName}" VerticalAlignment="Center" FontSize="16" Margin="0 5 0 0" />
+                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding ArtistName}" VerticalAlignment="Center" FontSize="14" Margin="0 0 0 5" />
+            </Grid>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding PlayerTime.Seconds, Converter={StaticResource DurationSecondsNumberToString}}" VerticalAlignment="Center" />
+                <Slider Orientation="Horizontal" Width="400" VerticalAlignment="Center" 
+                        Minimum="0" Maximum="{Binding Duration, Converter={StaticResource DurationSecondsNumberToString}}" 
+                         />
+                <TextBlock Text="{Binding Duration, Converter={StaticResource DurationSecondsNumberToString}}" VerticalAlignment="Center" />
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Name="RightPanel" FlowDirection="RightToLeft">
+            <Button Style="{StaticResource ImageButton}">
+                <Button.Content>
+                    <Image Source="{Binding IsAdded, Converter={StaticResource BooleanToImagePathConverter}}" />
+                </Button.Content>
+            </Button>
+            <Button Command="{Binding ToggleVolumeSliderCommand}" Style="{StaticResource ImageButton}">
+                <Button.Content>
+                    <Image Source="pack://application:,,,/Images/volume.png" FlowDirection="LeftToRight" />
+                </Button.Content>
+            </Button>
+            <StackPanel Orientation="Horizontal" 
+                        Visibility="{Binding ToShowVolumeSlider, Converter={StaticResource BooleanToVisbilityPropertyConverter}}">
+                <Slider TickFrequency="0.01" Orientation="Horizontal" Width="200" VerticalAlignment="Center" Minimum="0" 
+                        Maximum="1" Value="{Binding Volume}" FlowDirection="LeftToRight" />
+                <TextBlock Text="{Binding VolumeOutput}" VerticalAlignment="Center" FontSize="14" Margin="5,0,0,0" />
+            </StackPanel>
+        </StackPanel>
+        <MediaElement Source="{Binding PlayerSourcePath}" Volume="{Binding Volume, UpdateSourceTrigger=PropertyChanged}"
+                      LoadedBehavior="{Binding IsPlaying, Converter={StaticResource BooleanToMediaStateConverter}}" 
+                      Name="mediaElement"/>
     </Grid>
 </UserControl>

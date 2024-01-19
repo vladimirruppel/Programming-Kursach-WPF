@@ -8,15 +8,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\backward.png" />
     <None Remove="Images\close.png" />
     <None Remove="Images\default-cover.png" />
+    <None Remove="Images\forward.png" />
     <None Remove="Images\like.png" />
     <None Remove="Images\logo.jpg" />
     <None Remove="Images\maximize.png" />
     <None Remove="Images\minimize.png" />
     <None Remove="Images\not-like.png" />
+    <None Remove="Images\pause.png" />
+    <None Remove="Images\play-player.png" />
     <None Remove="Images\play-track-view.png" />
     <None Remove="Images\search.png" />
+    <None Remove="Images\volume.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,15 +34,20 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\backward.png" />
     <Resource Include="Images\close.png" />
     <Resource Include="Images\default-cover.png" />
+    <Resource Include="Images\forward.png" />
     <Resource Include="Images\like.png" />
     <Resource Include="Images\logo.jpg" />
     <Resource Include="Images\maximize.png" />
     <Resource Include="Images\minimize.png" />
     <Resource Include="Images\not-like.png" />
+    <Resource Include="Images\pause.png" />
+    <Resource Include="Images\play-player.png" />
     <Resource Include="Images\play-track-view.png" />
     <Resource Include="Images\search.png" />
+    <Resource Include="Images\volume.png" />
   </ItemGroup>
 
 </Project>

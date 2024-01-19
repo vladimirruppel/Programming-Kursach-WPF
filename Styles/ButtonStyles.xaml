@@ -14,4 +14,14 @@
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="Padding" Value="20,10" />
     </Style>
+    <Style TargetType="Button" x:Key="ImageButton">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Width" Value="64" />
+        <Style.Resources>
+            <Style TargetType="Image">
+                <Setter Property="Width" Value="40" />
+            </Style>
+        </Style.Resources>
+    </Style>
 </ResourceDictionary>

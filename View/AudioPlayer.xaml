@@ -8,7 +8,7 @@
              xmlns:converters="clr-namespace:prog3_kursach.Converters"
              
              mc:Ignorable="d" 
-             Height="64" d:DesignWidth="800">
+             Height="64" d:DesignWidth="1200">
     <UserControl.Resources>
         <converters:BooleanToImagePathConverter x:Key="BooleanToImagePathConverter" />
         <converters:BooleanToVisibilityPropertyConverter x:Key="BooleanToVisbilityPropertyConverter" />
@@ -16,7 +16,7 @@
         <converters:BooleanToPlayButtonPathConverter x:Key="BooleanToPlayButtonPathConverter" />
         <converters:DurationSecondsNumberToString x:Key="DurationSecondsNumberToString" />
     </UserControl.Resources>
-    <Grid>
+    <Grid Margin="15,0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="auto" />
@@ -52,12 +52,14 @@
                 <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding TrackName}" VerticalAlignment="Center" FontSize="16" Margin="0 5 0 0" />
                 <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding ArtistName}" VerticalAlignment="Center" FontSize="14" Margin="0 0 0 5" />
             </Grid>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding PlayerTime.Seconds, Converter={StaticResource DurationSecondsNumberToString}}" VerticalAlignment="Center" />
+            <StackPanel Orientation="Horizontal" Margin="30,0,0,0">
+                <TextBlock Margin="0,0,5,0" VerticalAlignment="Center"
+                           Text="{Binding PlayerTime.Seconds, Converter={StaticResource DurationSecondsNumberToString}}" />
                 <Slider Orientation="Horizontal" Width="400" VerticalAlignment="Center" 
                         Minimum="0" Maximum="{Binding Duration, Converter={StaticResource DurationSecondsNumberToString}}" 
                          />
-                <TextBlock Text="{Binding Duration, Converter={StaticResource DurationSecondsNumberToString}}" VerticalAlignment="Center" />
+                <TextBlock Margin="0,0,5,0" VerticalAlignment="Center" 
+                           Text="{Binding Duration, Converter={StaticResource DurationSecondsNumberToString}}" />
             </StackPanel>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Name="RightPanel" FlowDirection="RightToLeft">

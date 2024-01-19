@@ -14,8 +14,9 @@ namespace prog3_kursach.Converters
 
             int minutes = duration / 60;
             int seconds = duration % 60;
+            string secondsString = seconds.ToString().Length == 2 ? seconds.ToString() : "0" + seconds.ToString();
 
-            string result = $"{minutes}:{seconds}";
+            string result = $"{minutes}:{secondsString}";
             return result;
         }
 

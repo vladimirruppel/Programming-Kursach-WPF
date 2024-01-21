@@ -3,12 +3,30 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
       xmlns:local="clr-namespace:prog3_kursach.View"
+      xmlns:userControls="clr-namespace:prog3_kursach.View"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="MyTracksPage">
-
+    <b:Interaction.Triggers>
+        <b:EventTrigger EventName="Initialized">
+            <b:InvokeCommandAction Command="{Binding PageLoadedCommand}" />
+        </b:EventTrigger>
+    </b:Interaction.Triggers>
     <Grid>
-        <TextBlock Text="Мои треки" />
+        <ListBox Name="listBoxTracks" ItemsSource="{Binding Tracks}">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                </Style>
+            </ListBox.ItemContainerStyle>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <userControls:TrackView />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </Page>

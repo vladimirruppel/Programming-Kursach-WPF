@@ -1,5 +1,6 @@
 ﻿using prog3_kursach.Model;
 using prog3_kursach.MVVM;
+using prog3_kursach.View;
 using System;
 
 namespace prog3_kursach.ViewModel
@@ -9,43 +10,40 @@ namespace prog3_kursach.ViewModel
         public static AudioPlayerViewModel Instance { get; }
             = new AudioPlayerViewModel();
 
+        public AudioPlayer AudioPlayerView;
+
+        private ApplicationContext db = new ApplicationContext();
+
         private AudioPlayerViewModel() {
             ToggleVolumeSliderCommand = new RelayCommand(execute => ToggleVolumeSlider());
             ToggleIsPlayingCommand = new RelayCommand(execute => ToggleIsPlaying());
+            ToggleTrackCommand = new RelayCommand(execute => ToggleTrack());
         }
 
-        private string trackName = "Ничего не играет";
-        public string TrackName
+        private Track currentTrack = new Track
         {
-            get { return trackName; }
+            TrackName = "Ничего не играет",
+            ArtistName = "Выберите трек",
+            IsAdded = false,
+            Path = "C:\\\\root\\Скриптонит - 100 поцелуев.mp3"
+        };
+        public Track CurrentTrack
+        {
+            get { return currentTrack; }
             set
             {
-                trackName = value;
+                currentTrack = value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(TrackName));
+                OnPropertyChanged(nameof(ArtistName));
+                OnPropertyChanged(nameof(IsAdded));
+                OnPropertyChanged(nameof(PlayerSourcePath));
             }
         }
 
-        private string artistName = "Выберите трек";
-        public string ArtistName
-        {
-            get { return artistName; }
-            set
-            {
-                artistName = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool isAdded;
-        public bool IsAdded
-        {
-            get { return isAdded; }
-            set 
-            { 
-                isAdded = value;
-                OnPropertyChanged();
-            }
-        }
+        public string TrackName => CurrentTrack.TrackName;
+        public string ArtistName => CurrentTrack.ArtistName;
+        public bool IsAdded => CurrentTrack.IsAdded;
 
         private int duration;
         public int Duration
@@ -98,17 +96,7 @@ namespace prog3_kursach.ViewModel
             }
         }
 
-        private string playerSourcePath = "C:\\\\root\\Скриптонит - 100 поцелуев.mp3";
-
-        public string PlayerSourcePath
-        {
-            get { return playerSourcePath; }
-            set 
-            { 
-                playerSourcePath = value;
-                OnPropertyChanged();
-            }
-        }
+        public string PlayerSourcePath => CurrentTrack.Path;
 
         private TimeSpan playerTime;
         public TimeSpan PlayerTime
@@ -118,18 +106,23 @@ namespace prog3_kursach.ViewModel
             { 
                 playerTime = value; 
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(PlayerTimeSeconds));
             }
         }
 
+        public int PlayerTimeSeconds => (int)PlayerTime.TotalSeconds;
+
         public RelayCommand ToggleVolumeSliderCommand { get; }
         public RelayCommand ToggleIsPlayingCommand {  get; }
+        public RelayCommand ToggleTrackCommand { get; }
 
         public void Play(Track track)
         {
-            TrackName = track.TrackName;
-            ArtistName = track.ArtistName;
-            IsAdded = track.IsAdded;
+            CurrentTrack = track;
 
+            AudioPlayerView.mediaElement.Source = new Uri(track.Path);
+            AudioPlayerView.mediaElement_SourceUpdated();
+            IsPlaying = true;
         }
 
         private void ToggleVolumeSlider()
@@ -140,6 +133,19 @@ namespace prog3_kursach.ViewModel
         private void ToggleIsPlaying()
         {
             IsPlaying = !IsPlaying;
+        }
+
+        private void ToggleTrack()
+        {
+            db.Database.EnsureCreated();
+            Track track = db.Tracks.Find(currentTrack.Id);
+            if (track != null)
+            {
+                track.IsAdded = !track.IsAdded;
+                db.SaveChanges();
+
+                CurrentTrack = track;
+            }
         }
     }
 }

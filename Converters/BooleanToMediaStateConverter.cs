@@ -10,7 +10,7 @@ namespace prog3_kursach.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             bool val = (bool)value;
-            MediaState res = val ? MediaState.Play : MediaState.Stop;
+            MediaState res = val ? MediaState.Play : MediaState.Pause;
             return res;
         }
 

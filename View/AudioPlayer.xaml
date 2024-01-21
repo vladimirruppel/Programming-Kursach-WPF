@@ -54,16 +54,17 @@
             </Grid>
             <StackPanel Orientation="Horizontal" Margin="30,0,0,0">
                 <TextBlock Margin="0,0,5,0" VerticalAlignment="Center"
-                           Text="{Binding PlayerTime.Seconds, Converter={StaticResource DurationSecondsNumberToString}}" />
+                           Text="{Binding PlayerTimeSeconds, Converter={StaticResource DurationSecondsNumberToString}}" />
                 <Slider Orientation="Horizontal" Width="400" VerticalAlignment="Center" 
-                        Minimum="0" Maximum="{Binding Duration, Converter={StaticResource DurationSecondsNumberToString}}" 
-                         />
+                        Minimum="0" Maximum="1" Name="playerSlider" 
+                        GotMouseCapture="playerSlider_GotMouseCapture"
+                        LostMouseCapture="playerSlider_LostMouseCapture" />
                 <TextBlock Margin="0,0,5,0" VerticalAlignment="Center" 
                            Text="{Binding Duration, Converter={StaticResource DurationSecondsNumberToString}}" />
             </StackPanel>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Name="RightPanel" FlowDirection="RightToLeft">
-            <Button Style="{StaticResource ImageButton}">
+            <Button Command="{Binding ToggleTrackCommand}" Style="{StaticResource ImageButton}">
                 <Button.Content>
                     <Image Source="{Binding IsAdded, Converter={StaticResource BooleanToImagePathConverter}}" />
                 </Button.Content>

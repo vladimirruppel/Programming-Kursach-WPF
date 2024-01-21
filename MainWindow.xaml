@@ -21,7 +21,7 @@
             <RowDefinition Height="64" />
         </Grid.RowDefinitions>
 
-        <Grid Name="gridTopPanel">
+        <Grid Name="gridTopPanel" Background="Transparent">
             <b:Interaction.Triggers>
                 <b:EventTrigger EventName="MouseLeftButtonDown">
                     <b:InvokeCommandAction Command="{Binding DragMoveWindowCommand}" />

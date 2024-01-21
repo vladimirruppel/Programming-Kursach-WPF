@@ -43,7 +43,7 @@ namespace prog3_kursach.Model
         private string path = "";
         public string Path
         {
-            get { return path = ""; }
+            get { return path; }
             set 
             { 
                 path = value; 
@@ -52,7 +52,6 @@ namespace prog3_kursach.Model
         }
 
         private int duration;
-
         public int Duration
         {
             get { return duration; }

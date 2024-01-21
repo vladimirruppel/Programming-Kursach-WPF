@@ -1,0 +1,56 @@
+﻿<UserControl x:Class="prog3_kursach.View.TrackListChooseView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:prog3_kursach.View"
+             xmlns:userControls="clr-namespace:prog3_kursach.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <StackPanel Orientation="Vertical">
+        <TextBlock Text="Треклист (добавленные треки)" Style="{StaticResource Header}"/>
+        <ListBox Name="listBoxAddedTracks" ItemsSource="{Binding AddedTracks}">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                </Style>
+            </ListBox.ItemContainerStyle>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid Height="50">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Button Content="-" Command="{Binding RemoveTrackCommand}" />
+                        <userControls:TrackView Grid.Column="1" DataContext="{Binding TrackViewModel}" HorizontalAlignment="Stretch" />
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <TextBlock Text="Остальные треки (треки для добавления)" Style="{StaticResource Header}"/>
+        <ListBox Name="listBoxOtherTracks" ItemsSource="{Binding OtherTracks}">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                </Style>
+            </ListBox.ItemContainerStyle>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid Height="50">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Button Content="+" Command="{Binding AddTrackCommand}" />
+                        <userControls:TrackView Grid.Column="1" DataContext="{Binding TrackViewModel}" HorizontalAlignment="Stretch" />
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </StackPanel>
+</UserControl>

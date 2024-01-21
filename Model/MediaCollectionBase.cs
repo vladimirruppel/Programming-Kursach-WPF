@@ -1,10 +1,10 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 
 namespace prog3_kursach.Model
 {
     public class MediaCollectionBase
     {
-        public string Name { get; set; }
-        public ObservableCollection<Track> Tracks { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public List<Track> Tracks { get; set; } = new List<Track>();
     }
 }

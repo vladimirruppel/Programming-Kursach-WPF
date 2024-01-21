@@ -61,10 +61,17 @@
                 <Button Command="{Binding OpenPageCommand}" CommandParameter="Edit" Content="Редактирование" Style="{StaticResource LinkButton}" />
             </StackPanel>
             <GridSplitter Grid.Column="1" Background="Black" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsEnabled="False" />
-            <StackPanel Grid.Column="2" Orientation="Vertical" Margin="40,20">
-                <userControls:Search Margin="0,0,0,20" />
-                <Frame NavigationUIVisibility="Hidden"  Name="frame" Source="{Binding FramePath, UpdateSourceTrigger=PropertyChanged}"/>
-            </StackPanel>
+            <ScrollViewer Grid.Column="2">
+                <StackPanel Orientation="Vertical" Margin="40,20">
+                    <userControls:Search Margin="0,0,0,20" />
+                    <Frame NavigationUIVisibility="Hidden" 
+                           Height="auto"
+                           ScrollViewer.VerticalScrollBarVisibility="Visible" 
+                           ScrollViewer.CanContentScroll="True" 
+                           Name="frame" 
+                           Source="{Binding FramePath, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+            </ScrollViewer>
         </Grid>
         <GridSplitter Grid.Row="2" Background="Black" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  IsEnabled="False" />
         <userControls:AudioPlayer Grid.Row="3" DataContext="{x:Static viewModels:AudioPlayerViewModel.Instance}" />

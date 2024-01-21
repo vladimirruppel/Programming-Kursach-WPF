@@ -1,24 +1,20 @@
-﻿<UserControl x:Class="prog3_kursach.View.EditPage"
+﻿<Page x:Class="prog3_kursach.View.EditPage"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:prog3_kursach.View"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.Resources>
+             d:DesignHeight="450" d:DesignWidth="800"
+             Title="EditPage">
+    <Page.Resources>
         <Style TargetType="StackPanel" x:Key="TabItemContent">
             <Setter Property="Margin" Value="15,20" />
-        </Style>
-        <Style TargetType="TextBlock" x:Key="Header">
-            <Setter Property="FontSize" Value="18" />
-            <Setter Property="FontWeight" Value="Bold" />
-            <Setter Property="Margin" Value="0,0,0,15" />
         </Style>
         <Style TargetType="local:LabelField">
             <Setter Property="Margin" Value="0,0,0,15" />
         </Style>
-    </UserControl.Resources>
+    </Page.Resources>
     <Grid>
         <TabControl>
             <TabItem Header="Создание трека">
@@ -26,20 +22,27 @@
                     <TextBlock Text="Создание трека" HorizontalAlignment="Center" Style="{StaticResource Header}" />
                     <StackPanel Orientation="Horizontal" Height="62" HorizontalAlignment="Center" Margin="0,0,0,15">
                         <Button Command="{Binding ChooseFileCommand}" Content="Выбрать музыкальный файл" Height="40" Margin="0,0,15,0" />
-                        <local:LabelField DataContext="{Binding FilePathField}" x:Name="FilePathField" Width="400" />
+                        <local:LabelField DataContext="{Binding FilePathField}" Width="400" />
                     </StackPanel>
-                    <local:LabelField DataContext="{Binding ArtistNameField}" x:Name="ArtistNameField" />
-                    <local:LabelField DataContext="{Binding TrackNameField}" x:Name="TrackNameField" />
-                    <local:LabelField DataContext="{Binding ReleaseYearField}" x:Name="ReleaseYearField" />
+                    <local:LabelField DataContext="{Binding ArtistNameField}" />
+                    <local:LabelField DataContext="{Binding TrackNameField}" />
+                    <local:LabelField DataContext="{Binding ReleaseYearField}" />
                     <Button Command="{Binding CreateTrackCommand}" Content="Создать трек" Width="200" />
                 </StackPanel>
             </TabItem> 
             <TabItem Header="Создание альбома">
-                fggdfgfdg
+                <StackPanel Orientation="Vertical" Style="{StaticResource TabItemContent}">
+                    <TextBlock Text="Создание альбома" HorizontalAlignment="Center" Style="{StaticResource Header}" />
+                    <local:LabelField DataContext="{Binding ArtistNameField}" />
+                    <local:LabelField DataContext="{Binding AlbumNameField}" />
+                    <local:LabelField DataContext="{Binding ReleaseYearField}" />
+                    <local:TrackListChooseView DataContext="{Binding TrackListChooseViewModel}" />
+                    <Button Command="{Binding CreateAlbumCommand}" Content="Создать альбом" Width="200" />
+                </StackPanel>
             </TabItem>
             <TabItem Header="Создание плейлиста">
                 fggdfgfdg
             </TabItem>
         </TabControl>
     </Grid>
-</UserControl>
+</Page>

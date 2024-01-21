@@ -3,12 +3,21 @@ using NAudio.Wave;
 using prog3_kursach.Model;
 using prog3_kursach.MVVM;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
+using System.Windows.Documents;
 
 namespace prog3_kursach.ViewModel
 {
     public class EditPageViewModel : ViewModelBase
     {
+        private const string FILE_PATH_FIELD_LABEL = "Путь к музыкальному файлу";
+        private const string TRACK_NAME_FIELD_LABEL = "Название трека";
+        private const string ARTIST_NAME_FIELD_LABEL = "Имя артиста";
+        private const string RELEASE_YEAR_FIELD_LABEL = "Год выпуска";
+        private const string ALBUM_NAME_FIELD_LABEL = "Название альбома";
+
         public enum FieldType
         {
             Text,
@@ -66,7 +75,7 @@ namespace prog3_kursach.ViewModel
         ApplicationContext db = new ApplicationContext();
 
         private LabelFieldStruct filePathField 
-            = new LabelFieldStruct("Путь к музыкальному файлу", FieldType.File, true);
+            = new LabelFieldStruct(FILE_PATH_FIELD_LABEL, FieldType.File, true);
         public LabelFieldStruct FilePathField
         {
             get { return filePathField; }
@@ -79,7 +88,7 @@ namespace prog3_kursach.ViewModel
         }
 
         private LabelFieldStruct trackNameField 
-            = new LabelFieldStruct("Название трека", FieldType.Text);
+            = new LabelFieldStruct(TRACK_NAME_FIELD_LABEL, FieldType.Text);
         public LabelFieldStruct TrackNameField
         {
             get { return trackNameField; }
@@ -91,7 +100,7 @@ namespace prog3_kursach.ViewModel
         }
 
         private LabelFieldStruct artistNameField
-            = new LabelFieldStruct("Имя артиста", FieldType.Text);
+            = new LabelFieldStruct(ARTIST_NAME_FIELD_LABEL, FieldType.Text);
         public LabelFieldStruct ArtistNameField
         {
             get { return artistNameField; }
@@ -103,7 +112,7 @@ namespace prog3_kursach.ViewModel
         }
 
         private LabelFieldStruct releaseYearField
-            = new LabelFieldStruct("Год выпуска", FieldType.Number);
+            = new LabelFieldStruct(RELEASE_YEAR_FIELD_LABEL, FieldType.Number);
         public LabelFieldStruct ReleaseYearField
         {
             get { return releaseYearField; }
@@ -116,14 +125,39 @@ namespace prog3_kursach.ViewModel
 
         private int duration;
 
+        private LabelFieldStruct albumNameField
+            = new LabelFieldStruct(ALBUM_NAME_FIELD_LABEL, FieldType.Text);
+        public LabelFieldStruct AlbumNameField
+        {
+            get { return albumNameField; }
+            set
+            {
+                albumNameField = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private TrackListChooseViewModel trackListChooseViewModel = new TrackListChooseViewModel();
+        public TrackListChooseViewModel TrackListChooseViewModel
+        {
+            get { return trackListChooseViewModel; }
+            set
+            {
+                trackListChooseViewModel = value;
+                OnPropertyChanged();
+            }
+        }
+
         public EditPageViewModel()
         {
             ChooseFileCommand = new RelayCommand(execute => ChooseFile());
             CreateTrackCommand = new RelayCommand(execute => CreateTrack(), canExecute => CanCreateTrack());
+            CreateAlbumCommand = new RelayCommand(execute => CreateAlbum(), canExecute => CanCreateAlbum());
         }
 
         public RelayCommand ChooseFileCommand { get; }
         public RelayCommand CreateTrackCommand { get; }
+        public RelayCommand CreateAlbumCommand { get; }
 
         private void ChooseFile()
         {
@@ -135,7 +169,7 @@ namespace prog3_kursach.ViewModel
             {
                 string path = fileDialog.FileName;
                 FilePathField
-                    = new LabelFieldStruct("Путь к музыкальному файлу", path, FieldType.File, true);
+                    = new LabelFieldStruct(FILE_PATH_FIELD_LABEL, path, FieldType.File, true);
 
                 duration = (int)new AudioFileReader(path).TotalTime.TotalSeconds;
             }
@@ -159,12 +193,12 @@ namespace prog3_kursach.ViewModel
             db.SaveChanges();
 
             // очистка полей
-            ArtistNameField = new LabelFieldStruct("Имя артиста", FieldType.Text);
-            TrackNameField = new LabelFieldStruct("Название трека", FieldType.Text);
-            ReleaseYearField = new LabelFieldStruct("Год выпуска", FieldType.Text);
-            FilePathField = new LabelFieldStruct("Путь к музыкальному файлу", FieldType.File, true);
+            ArtistNameField = new LabelFieldStruct(ARTIST_NAME_FIELD_LABEL, FieldType.Text);
+            TrackNameField = new LabelFieldStruct(TRACK_NAME_FIELD_LABEL, FieldType.Text);
+            ReleaseYearField = new LabelFieldStruct(RELEASE_YEAR_FIELD_LABEL, FieldType.Text);
+            FilePathField = new LabelFieldStruct(FILE_PATH_FIELD_LABEL, FieldType.File, true);
             // вывод диалогового окна "Трек создан"
-            MessageBox.Show("Успешно!", "Трек создан", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show($"Трек создан: {track.ArtistName} - {track.TrackName}", "Успешно!", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private bool CanCreateTrack()
@@ -180,6 +214,43 @@ namespace prog3_kursach.ViewModel
             return true;
         }
 
+        private void CreateAlbum()
+        {
+            Album album = new Album
+            {
+                ArtistName = ArtistNameField.Text,
+                Name = AlbumNameField.Text,
+                Tracks = GetListOfTracksFromTrackListChooseViewModel(TrackListChooseViewModel),
+                ReleaseYear = Convert.ToInt32(ReleaseYearField.Text),
+                DateAdded = DateTime.Now,
+                IsAdded = false
+            };
+
+            db.Albums.Add(album);
+            db.SaveChanges();
+
+            // очистка полей
+            ArtistNameField = new LabelFieldStruct(ARTIST_NAME_FIELD_LABEL, FieldType.Text);
+            AlbumNameField = new LabelFieldStruct(ALBUM_NAME_FIELD_LABEL, FieldType.Text);
+            ReleaseYearField = new LabelFieldStruct(RELEASE_YEAR_FIELD_LABEL, FieldType.Text);
+            TrackListChooseViewModel = new TrackListChooseViewModel();
+            // вывод диалогового окна "Альбом создан"
+            MessageBox.Show($"Альбом создан: {album.ArtistName} - {album.Name}", "Успешно!", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private bool CanCreateAlbum()
+        {
+            if (ArtistNameField.Text.Length == 0)
+                return false;
+            if (AlbumNameField.Text.Length == 0)
+                return false;
+            if (ReleaseYearField.Text.Length != 4 || !ReleaseYearField.IsValidated)
+                return false;
+            if (TrackListChooseViewModel.AddedTracks.Count() == 0)
+                return false;
+            return true;
+        }
+
         private static bool IsStringNumber(string str)
         {
             foreach (var ch in str)
@@ -188,6 +259,18 @@ namespace prog3_kursach.ViewModel
                     return false;
             }
             return true;
+        }
+
+        private static List<Track> GetListOfTracksFromTrackListChooseViewModel(TrackListChooseViewModel trackListChooseViewModel)
+        {
+            List<Track> tracks = new List<Track>();
+            foreach (ChooseTrackViewModel chooseTrackViewModel in trackListChooseViewModel.AddedTracks)
+            {
+                TrackViewModel trackViewModel = chooseTrackViewModel.TrackViewModel;
+                Track track = trackViewModel.Track;
+                tracks.Add(track);
+            }
+            return tracks;
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Windows.Controls;
 
 namespace prog3_kursach.View
 {
-    public partial class EditPage : UserControl
+    public partial class EditPage : Page
     {
         public EditPage()
         {

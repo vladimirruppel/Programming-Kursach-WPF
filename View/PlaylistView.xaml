@@ -1,9 +1,9 @@
-﻿<UserControl x:Class="prog3_kursach.ViewModel.PlaylistView"
+﻿<UserControl x:Class="prog3_kursach.View.PlaylistView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:prog3_kursach.ViewModel"
+             xmlns:local="clr-namespace:prog3_kursach.View"
              xmlns:userControls="clr-namespace:prog3_kursach.View"
              xmlns:converters="clr-namespace:prog3_kursach.Converters"
              mc:Ignorable="d" 
@@ -20,7 +20,7 @@
                 </Button.Content>
             </Button>
         </Grid>
-        <ListBox Name="listBoxTracks" ItemsSource="{Binding Playlists}">
+        <ListBox Name="listBoxTracks" ItemsSource="{Binding Tracks}">
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
                     <Setter Property="HorizontalAlignment" Value="Stretch"/>

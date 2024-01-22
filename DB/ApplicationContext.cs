@@ -14,7 +14,7 @@ namespace prog3_kursach
         public DbSet<PlaylistTrack> PlaylistsTracks { get; set; } = null!;
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=library13.db");
+            optionsBuilder.UseSqlite("Data Source=library15.db");
             optionsBuilder.LogTo(Console.WriteLine);
             optionsBuilder.EnableSensitiveDataLogging();
         }

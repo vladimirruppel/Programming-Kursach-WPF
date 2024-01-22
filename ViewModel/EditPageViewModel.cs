@@ -1,10 +1,13 @@
-﻿using Microsoft.Win32;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.Win32;
 using NAudio.Wave;
 using prog3_kursach.Model;
 using prog3_kursach.MVVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Documents;
 
@@ -150,6 +153,11 @@ namespace prog3_kursach.ViewModel
 
         public EditPageViewModel()
         {
+            db.Database.EnsureCreated();
+            db.Tracks.Load();
+            db.Albums.Load();
+            db.AlbumsTracks.Load();
+
             ChooseFileCommand = new RelayCommand(execute => ChooseFile());
             CreateTrackCommand = new RelayCommand(execute => CreateTrack(), canExecute => CanCreateTrack());
             CreateAlbumCommand = new RelayCommand(execute => CreateAlbum(), canExecute => CanCreateAlbum());
@@ -185,7 +193,6 @@ namespace prog3_kursach.ViewModel
                 Path = FilePathField.Text,
                 Duration = duration,
                 IsAdded = false,
-                AlbumId = -1,
                 DateAdded = DateTime.Now,
             };
 
@@ -220,13 +227,25 @@ namespace prog3_kursach.ViewModel
             {
                 ArtistName = ArtistNameField.Text,
                 Name = AlbumNameField.Text,
-                Tracks = GetListOfTracksFromTrackListChooseViewModel(TrackListChooseViewModel),
                 ReleaseYear = Convert.ToInt32(ReleaseYearField.Text),
                 DateAdded = DateTime.Now,
                 IsAdded = false
             };
 
             db.Albums.Add(album);
+            db.SaveChanges();
+
+            int albumId = album.Id;
+            List<Track> tracks = GetListOfTracksFromTrackListChooseViewModel(TrackListChooseViewModel);
+            foreach (Track track in tracks)
+            {
+                AlbumTrack albumTrack = new AlbumTrack
+                {
+                    AlbumId = albumId,
+                    TrackId = track.Id
+                };
+                db.AlbumsTracks.Add(albumTrack);
+            }
             db.SaveChanges();
 
             // очистка полей
@@ -271,6 +290,17 @@ namespace prog3_kursach.ViewModel
                 tracks.Add(track);
             }
             return tracks;
+        }
+
+        private static List<int> GetListOfTrackIdsFromTrackList(List<Track> tracks)
+        {
+            List<int> trackIds = new List<int>();
+            foreach (Track track in tracks)
+            {
+                int trackId = track.Id;
+                trackIds.Add(trackId);
+            }
+            return trackIds;
         }
     }
 }

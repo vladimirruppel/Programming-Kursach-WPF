@@ -137,6 +137,7 @@ namespace prog3_kursach.ViewModel
 
         private void ToggleTrack()
         {
+            db.Database.EnsureCreatedAsync().Wait();
             db.Database.EnsureCreated();
             Track track = db.Tracks.Find(currentTrack.Id);
             if (track != null)

@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Win32;
 using NAudio.Wave;
 using prog3_kursach.Model;
@@ -7,9 +6,7 @@ using prog3_kursach.MVVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Documents;
 
 namespace prog3_kursach.ViewModel
 {
@@ -20,6 +17,7 @@ namespace prog3_kursach.ViewModel
         private const string ARTIST_NAME_FIELD_LABEL = "Имя артиста";
         private const string RELEASE_YEAR_FIELD_LABEL = "Год выпуска";
         private const string ALBUM_NAME_FIELD_LABEL = "Название альбома";
+        private const string PLAYLIST_NAME_FIELD_LABEL = "Название плейлиста";
 
         public enum FieldType
         {
@@ -140,6 +138,18 @@ namespace prog3_kursach.ViewModel
             }
         }
 
+        private LabelFieldStruct playlistNameField
+            = new LabelFieldStruct(PLAYLIST_NAME_FIELD_LABEL, FieldType.Text);
+        public LabelFieldStruct PlaylistNameField
+        {
+            get { return playlistNameField; }
+            set
+            { 
+                playlistNameField = value; 
+                OnPropertyChanged();
+            }
+        }
+
         private TrackListChooseViewModel trackListChooseViewModel = new TrackListChooseViewModel();
         public TrackListChooseViewModel TrackListChooseViewModel
         {
@@ -161,11 +171,13 @@ namespace prog3_kursach.ViewModel
             ChooseFileCommand = new RelayCommand(execute => ChooseFile());
             CreateTrackCommand = new RelayCommand(execute => CreateTrack(), canExecute => CanCreateTrack());
             CreateAlbumCommand = new RelayCommand(execute => CreateAlbum(), canExecute => CanCreateAlbum());
+            CreatePlaylistCommand = new RelayCommand(execute => CreatePlaylist(), canExecute => CanCreatePlaylist());
         }
 
         public RelayCommand ChooseFileCommand { get; }
         public RelayCommand CreateTrackCommand { get; }
         public RelayCommand CreateAlbumCommand { get; }
+        public RelayCommand CreatePlaylistCommand { get; }
 
         private void ChooseFile()
         {
@@ -264,6 +276,47 @@ namespace prog3_kursach.ViewModel
             if (AlbumNameField.Text.Length == 0)
                 return false;
             if (ReleaseYearField.Text.Length != 4 || !ReleaseYearField.IsValidated)
+                return false;
+            if (TrackListChooseViewModel.AddedTracks.Count() == 0)
+                return false;
+            return true;
+        }
+
+        private void CreatePlaylist()
+        {
+            Playlist playlist = new Playlist 
+            {
+                Name = PlaylistNameField.Text,
+                CreationDate = DateTime.Now,
+                IsAdded = false
+            };
+
+            db.Playlists.Add(playlist);
+            db.SaveChanges();
+
+            int playlistId = playlist.Id;
+            List<Track> tracks = GetListOfTracksFromTrackListChooseViewModel(TrackListChooseViewModel);
+            foreach (Track track in tracks)
+            {
+                PlaylistTrack playlistTrack = new PlaylistTrack
+                {
+                    PlaylistId = playlistId,
+                    TrackId = track.Id
+                };
+                db.PlaylistsTracks.Add(playlistTrack);
+            }
+            db.SaveChanges();
+
+            // очистка полей
+            PlaylistNameField = new LabelFieldStruct(PLAYLIST_NAME_FIELD_LABEL, FieldType.Text);
+            TrackListChooseViewModel = new TrackListChooseViewModel();
+            // вывод диалогового окна "Альбом создан"
+            MessageBox.Show($"Плейлист создан: {playlist.Name}", "Успешно!", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private bool CanCreatePlaylist()
+        {
+            if (PlaylistNameField.Text.Length == 0)
                 return false;
             if (TrackListChooseViewModel.AddedTracks.Count() == 0)
                 return false;

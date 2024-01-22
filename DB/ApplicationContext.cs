@@ -10,10 +10,11 @@ namespace prog3_kursach
         public DbSet<Track> Tracks { get; set; } = null!;
         public DbSet<Album> Albums { get; set; } = null!;
         public DbSet<AlbumTrack> AlbumsTracks { get; set; } = null!;
-        //public DbSet<Playlist> Playlists { get; set; } = null!;
+        public DbSet<Playlist> Playlists { get; set; } = null!;
+        public DbSet<PlaylistTrack> PlaylistsTracks { get; set; } = null!;
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=library12.db");
+            optionsBuilder.UseSqlite("Data Source=library13.db");
             optionsBuilder.LogTo(Console.WriteLine);
             optionsBuilder.EnableSensitiveDataLogging();
         }

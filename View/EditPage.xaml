@@ -41,7 +41,12 @@
                 </StackPanel>
             </TabItem>
             <TabItem Header="Создание плейлиста">
-                fggdfgfdg
+                <StackPanel Orientation="Vertical" Style="{StaticResource TabItemContent}">
+                    <TextBlock Text="Создание плейлиста" HorizontalAlignment="Center" Style="{StaticResource Header}" />
+                    <local:LabelField DataContext="{Binding PlaylistNameField}" />
+                    <local:TrackListChooseView DataContext="{Binding TrackListChooseViewModel}" />
+                    <Button Command="{Binding CreatePlaylistCommand}" Content="Создать плейлист" Width="200" />
+                </StackPanel>
             </TabItem>
         </TabControl>
     </Grid>

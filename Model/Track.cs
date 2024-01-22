@@ -10,7 +10,7 @@ namespace prog3_kursach.Model
         public string ArtistName { get; set; } = string.Empty;
         public string TrackName { get; set; } = string.Empty;
 
-        public int ReleaseYear;
+        public int ReleaseYear { get; set; }
         public string Path { get; set; } = string.Empty;
         public int Duration { get; set; } 
         public DateTime DateAdded { get; set; }

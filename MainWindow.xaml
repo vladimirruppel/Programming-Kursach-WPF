@@ -57,13 +57,13 @@
                 <Button Command="{Binding OpenPageCommand}" CommandParameter="MyTracks" Content="Мои треки" Style="{StaticResource LinkButton}" />
                 <Button Command="{Binding OpenPageCommand}" CommandParameter="MyAlbums" Content="Мои альбомы" Style="{StaticResource LinkButton}" />
                 <Button Command="{Binding OpenPageCommand}" CommandParameter="MyPlaylists" Content="Мои плейлисты" Style="{StaticResource LinkButton}" />
-                <Button Command="{Binding OpenPageCommand}" CommandParameter="Catalog" Content="Каталог" Style="{StaticResource LinkButton}" />
+                <Button Command="{Binding OpenPageCommand}" CommandParameter="Main" Content="Каталог" Style="{StaticResource LinkButton}" />
                 <Button Command="{Binding OpenPageCommand}" CommandParameter="Edit" Content="Редактирование" Style="{StaticResource LinkButton}" />
             </StackPanel>
             <GridSplitter Grid.Column="1" Background="Black" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsEnabled="False" />
             <ScrollViewer Grid.Column="2">
                 <StackPanel Orientation="Vertical" Margin="40,20">
-                    <userControls:Search Margin="0,0,0,20" />
+                    <!--<userControls:Search Margin="0,0,0,20" />-->
                     <Frame NavigationUIVisibility="Hidden" 
                            Height="auto"
                            ScrollViewer.VerticalScrollBarVisibility="Visible" 

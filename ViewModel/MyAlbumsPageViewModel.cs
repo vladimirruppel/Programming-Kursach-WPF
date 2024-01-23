@@ -20,7 +20,8 @@ namespace prog3_kursach.ViewModel
             db.Albums.Load();
 
             foreach (Album album in db.Albums.ToList()) {
-                albums.Add(new AlbumViewModel(album));
+                if (album.IsAdded)
+                    albums.Add(new AlbumViewModel(album));
             }
         }
     }

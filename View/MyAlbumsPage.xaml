@@ -9,19 +9,6 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="MyAlbumsPage">
     <Grid>
-        <ListBox Name="listBoxTracks" ItemsSource="{Binding Albums}">
-            <ListBox.ItemContainerStyle>
-                <Style TargetType="ListBoxItem">
-                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                    <Setter Property="Margin" Value="0,0,0,15" />
-                </Style>
-            </ListBox.ItemContainerStyle>
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <userControls:AlbumView />
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        <userControls:AlbumsListBox DataContext="{Binding Albums}" />
     </Grid>
 </Page>

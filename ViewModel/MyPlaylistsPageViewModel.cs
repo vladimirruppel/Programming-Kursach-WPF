@@ -21,7 +21,8 @@ namespace prog3_kursach.ViewModel
 
             foreach (Playlist playlist in db.Playlists.ToList())
             {
-                playlists.Add(new PlaylistViewModel(playlist));
+                if (playlist.IsAdded)
+                    playlists.Add(new PlaylistViewModel(playlist));
             }
         }
     }

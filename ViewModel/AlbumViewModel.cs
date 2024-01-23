@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace prog3_kursach.ViewModel
 {
-    public class AlbumViewModel : ViewModelBase
+    public class AlbumViewModel : TracksContainerViewModelBase
     {
         private ApplicationContext db = new ApplicationContext();
 
@@ -23,6 +23,7 @@ namespace prog3_kursach.ViewModel
                 OnPropertyChanged(nameof(ReleaseYear));
                 OnPropertyChanged(nameof(IsAdded));
                 OnPropertyChanged(nameof(Tracks));
+                tracks = Tracks;
             }
         }
 
@@ -56,7 +57,7 @@ namespace prog3_kursach.ViewModel
             foreach (AlbumTrack albumTrack in albumTracks)
             {
                 Track track = db.Tracks.Find(albumTrack.TrackId);
-                tracks.Add(new TrackViewModel(track));
+                tracks.Add(new TrackViewModel(track, this));
             }
 
             return tracks;

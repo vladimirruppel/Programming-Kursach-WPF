@@ -2,6 +2,8 @@
 using prog3_kursach.MVVM;
 using prog3_kursach.View;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace prog3_kursach.ViewModel
 {
@@ -13,11 +15,24 @@ namespace prog3_kursach.ViewModel
         public AudioPlayer AudioPlayerView;
 
         private ApplicationContext db = new ApplicationContext();
+        private ObservableCollection<Track> Tracklist = new ObservableCollection<Track>();
+        private int trackIndex;
+        private int TrackIndex
+        {
+            get { return trackIndex; }
+            set
+            {
+                trackIndex = value;
+                Play(Tracklist[trackIndex]);
+            }
+        }
 
         private AudioPlayerViewModel() {
             ToggleVolumeSliderCommand = new RelayCommand(execute => ToggleVolumeSlider());
             ToggleIsPlayingCommand = new RelayCommand(execute => ToggleIsPlaying());
             ToggleTrackCommand = new RelayCommand(execute => ToggleTrack());
+            NextTrackCommand = new RelayCommand(execute => PlayNextTrack());
+            PreviousTrackCommand = new RelayCommand(execute => OnBackwardsButtonClick());
         }
 
         private Track currentTrack = new Track
@@ -115,6 +130,14 @@ namespace prog3_kursach.ViewModel
         public RelayCommand ToggleVolumeSliderCommand { get; }
         public RelayCommand ToggleIsPlayingCommand {  get; }
         public RelayCommand ToggleTrackCommand { get; }
+        public RelayCommand NextTrackCommand { get; }
+        public RelayCommand PreviousTrackCommand { get; }
+
+        public void PlayNewTrackList(List<Track> tracks, int trackIndex)
+        {
+            Tracklist = new ObservableCollection<Track>(tracks);
+            TrackIndex = trackIndex;
+        }
 
         public void Play(Track track)
         {
@@ -123,6 +146,30 @@ namespace prog3_kursach.ViewModel
             AudioPlayerView.mediaElement.Source = new Uri(track.Path);
             AudioPlayerView.mediaElement_SourceUpdated();
             IsPlaying = true;
+        }
+
+        public void PlayNextTrack()
+        {
+            if (TrackIndex + 1 == Tracklist.Count) // если текущий трек - последний в треклисте
+                TrackIndex = 0; // играем самый первый
+            else 
+                TrackIndex++; // иначе играем следующий трек
+        }
+
+        public void PlayPreviousTrack()
+        {
+            if (TrackIndex != 0) // если трек не самый первый в треклисте
+                TrackIndex--; // играем предыдущий
+            else
+                Play(Tracklist[TrackIndex]); // иначе играем тот же самый первый трек сначала
+        }
+
+        private void OnBackwardsButtonClick()
+        {
+            if (PlayerTimeSeconds > 3) // если текущий трек играет уже больше 3 секунд
+                Play(CurrentTrack); // играть этот же трек сначала
+            else
+                PlayPreviousTrack(); // иначе играем следующий трек
         }
 
         private void ToggleVolumeSlider()

@@ -6,7 +6,7 @@ using System.Collections.ObjectModel;
 
 namespace prog3_kursach.ViewModel
 {
-    public class TrackListChooseViewModel : ViewModelBase
+    public class TrackListChooseViewModel : TracksContainerViewModelBase
     {
         ApplicationContext db = new ApplicationContext();
 
@@ -21,9 +21,14 @@ namespace prog3_kursach.ViewModel
             db.Database.EnsureCreated();
             db.Tracks.Load();
 
+            tracks = new List<TrackViewModel>();
+
             foreach (Track track in db.Tracks)
             {
-                otherTracks.Add(new ChooseTrackViewModel(new TrackViewModel(track), this));
+                TrackViewModel trackViewModel = new TrackViewModel(track, this);
+                tracks.Add(trackViewModel);
+
+                otherTracks.Add(new ChooseTrackViewModel(trackViewModel, this));
             }
         }
 

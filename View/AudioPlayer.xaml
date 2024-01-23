@@ -23,7 +23,7 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Orientation="Horizontal" Name="LeftPanel">
-            <Button Style="{StaticResource ImageButton}">
+            <Button Command="{Binding PreviousTrackCommand}" Style="{StaticResource ImageButton}">
                 <Button.Content>
                     <Image Source="pack://application:,,,/Images/backward.png" />
                 </Button.Content>
@@ -33,7 +33,7 @@
                     <Image Source="{Binding IsPlaying, Converter={StaticResource BooleanToPlayButtonPathConverter}}" />
                 </Button.Content>
             </Button>
-            <Button Style="{StaticResource ImageButton}">
+            <Button Command="{Binding NextTrackCommand}" Style="{StaticResource ImageButton}">
                 <Button.Content>
                     <Image Source="pack://application:,,,/Images/forward.png" />
                 </Button.Content>
@@ -83,6 +83,6 @@
         </StackPanel>
         <MediaElement Source="{Binding PlayerSourcePath}" Volume="{Binding Volume, UpdateSourceTrigger=PropertyChanged}"
                       LoadedBehavior="{Binding IsPlaying, Converter={StaticResource BooleanToMediaStateConverter}}" 
-                      Name="mediaElement"/>
+                      Name="mediaElement" MediaEnded="mediaElement_MediaEnded"/>
     </Grid>
 </UserControl>

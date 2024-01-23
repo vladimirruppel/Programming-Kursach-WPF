@@ -52,5 +52,10 @@ namespace prog3_kursach.View
             playerSlider.Value = (int)mediaElement.Position.TotalSeconds;
             isSliderClicked = false;
         }
+
+        private void mediaElement_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            AudioPlayerViewModel.Instance.PlayNextTrack();
+        }
     }
 }

@@ -6,11 +6,11 @@ using System.Collections.ObjectModel;
 
 namespace prog3_kursach.ViewModel
 {
-    class MainPageViewModel : ViewModelBase
+    class MainPageViewModel : TracksContainerViewModelBase
     {
         ApplicationContext db = new ApplicationContext();
 
-        private readonly ObservableCollection<TrackViewModel> tracks;
+        private readonly new ObservableCollection<TrackViewModel> tracks;
         public IEnumerable<TrackViewModel> Tracks => tracks;
 
         private readonly ObservableCollection<AlbumViewModel> albums;
@@ -37,7 +37,7 @@ namespace prog3_kursach.ViewModel
 
             foreach (Track track in db.Tracks)
             {
-                tracks.Add(new TrackViewModel(track));
+                tracks.Add(new TrackViewModel(track, this));
             }
 
             foreach (Album album in db.Albums)
@@ -49,6 +49,29 @@ namespace prog3_kursach.ViewModel
             {
                 playlists.Add(new PlaylistViewModel(playlist));
             }
+        }
+
+        public override int GetIndexOfTrackInCollection(Track track)
+        {
+            for (int i = 0; i < tracks.Count; i++)
+            {
+                if (tracks[i].Track.Id == track.Id)
+                    return i;
+            }
+            return -1;
+        }
+
+        public override List<Track> GetListOfTracks()
+        {
+            List<Track> list = new List<Track>();
+
+            foreach (TrackViewModel trackViewModel in tracks)
+            {
+                Track track = trackViewModel.Track;
+                list.Add(track);
+            }
+
+            return list;
         }
     }
 }

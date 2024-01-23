@@ -1,11 +1,14 @@
 ﻿using prog3_kursach.Model;
 using prog3_kursach.MVVM;
+using System.Collections.Generic;
+using System.Windows.Documents;
 
 namespace prog3_kursach.ViewModel
 {
     public class TrackViewModel : ViewModelBase
     {
-        ApplicationContext db = new ApplicationContext();
+        private ApplicationContext db = new ApplicationContext();
+        private TracksContainerViewModelBase parentViewModel;
 
         private Track _track;
         public Track Track
@@ -51,9 +54,10 @@ namespace prog3_kursach.ViewModel
             }
         }
 
-        public TrackViewModel(Track track)
+        public TrackViewModel(Track track, TracksContainerViewModelBase parentViewModel)
         {
             Track = track;
+            this.parentViewModel = parentViewModel;
 
             ToggleTrackCommand = new RelayCommand(execute => ToggleTrack());
             PlayCommand = new RelayCommand(execute => Play());
@@ -81,7 +85,10 @@ namespace prog3_kursach.ViewModel
 
         private void Play()
         {
-            AudioPlayerViewModel.Instance.Play(Track);
+            List<Track> trackListForAudioPlayer = parentViewModel.GetListOfTracks();
+            int indexOfCurrentTrack = parentViewModel.GetIndexOfTrackInCollection(Track);
+
+            AudioPlayerViewModel.Instance.PlayNewTrackList(trackListForAudioPlayer, indexOfCurrentTrack);
         }
 
         private void ShowPlayButton()

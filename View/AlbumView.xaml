@@ -14,11 +14,11 @@
     <StackPanel Orientation="Vertical">
         <Grid>
             <StackPanel Orientation="Vertical">
-                <TextBlock Text="{Binding AlbumName}" Style="{StaticResource Header}" />
-                <TextBlock Text="{Binding ArtistName}" Style="{StaticResource Subheader}" />
-                <TextBlock Text="{Binding ReleaseYear}" />
+                <TextBlock Text="{Binding AlbumName}" Style="{StaticResource Header}" Margin="0,0,0,9" />
+                <TextBlock Text="{Binding ArtistName}" Style="{StaticResource Subheader}" Margin="0,0,0,9" />
+                <TextBlock Text="{Binding ReleaseYear}" Margin="0,0,0,15" />
             </StackPanel>
-            <Button Command="{Binding ToggleAlbumCommand}" Width="50" Height="50" HorizontalAlignment="Right">
+            <Button Command="{Binding ToggleAlbumCommand}" Style="{StaticResource ImageButton}" HorizontalAlignment="Right">
                 <Button.Content>
                     <Image Source="{Binding IsAdded, Converter={StaticResource BooleanToImagePathConverter}}"/>
                 </Button.Content>

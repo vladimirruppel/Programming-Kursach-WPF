@@ -12,9 +12,9 @@
         <converters:BooleanToImagePathConverter x:Key="BooleanToImagePathConverter" />
     </UserControl.Resources>
     <StackPanel Orientation="Vertical">
-        <Grid>
-            <TextBlock Text="{Binding PlaylistName}" Style="{StaticResource Header}" />
-            <Button Command="{Binding TogglePlaylistCommand}" Width="50" Height="50" HorizontalAlignment="Right">
+        <Grid Height="60">
+            <TextBlock Text="{Binding PlaylistName}" Style="{StaticResource Header}" VerticalAlignment="Center" Margin="0,0,0,0" />
+            <Button Command="{Binding TogglePlaylistCommand}" Style="{StaticResource ImageButton}" HorizontalAlignment="Right">
                 <Button.Content>
                     <Image Source="{Binding IsAdded, Converter={StaticResource BooleanToImagePathConverter}}"/>
                 </Button.Content>

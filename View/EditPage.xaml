@@ -15,7 +15,8 @@
             <Setter Property="Margin" Value="0,0,0,15" />
         </Style>
     </Page.Resources>
-    <Grid>
+    <StackPanel Orientation="Vertical">
+        <TextBlock Text="Редактирование" Style="{StaticResource Header}" />
         <TabControl>
             <TabItem Header="Создание трека">
                 <StackPanel Orientation="Vertical" Style="{StaticResource TabItemContent}">
@@ -49,5 +50,5 @@
                 </StackPanel>
             </TabItem>
         </TabControl>
-    </Grid>
+    </StackPanel>
 </Page>

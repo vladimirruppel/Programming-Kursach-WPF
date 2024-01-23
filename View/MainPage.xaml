@@ -17,7 +17,8 @@
         </b:EventTrigger>
     </b:Interaction.Triggers>
     <StackPanel Orientation="Vertical">
-        <TextBlock Text="Все треки" Style="{StaticResource Header}" />
+        <TextBlock Text="Каталог" Style="{StaticResource Header}" />
+        <TextBlock Text="Все треки" Style="{StaticResource Subheader}" />
         <ListBox Name="listBoxTracks" ItemsSource="{Binding Tracks}" Margin="0,0,0,20">
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
@@ -31,9 +32,9 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <TextBlock Text="Все альбомы" Style="{StaticResource Header}" />
+        <TextBlock Text="Все альбомы" Style="{StaticResource Subheader}" />
         <userControls:AlbumsListBox DataContext="{Binding Albums}" Margin="0,0,0,20" />
-        <TextBlock Text="Все плейлисты" Style="{StaticResource Header}" />
+        <TextBlock Text="Все плейлисты" Style="{StaticResource Subheader}" />
         <userControls:PlaylistsListBox DataContext="{Binding Playlists}" Margin="0,0,0,20" />
     </StackPanel>
 </Page>

@@ -20,11 +20,15 @@
                 <DataTemplate>
                     <Grid Height="50">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="50" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
-                        <Button Content="-" Command="{Binding RemoveTrackCommand}" />
+                        <Button Command="{Binding RemoveTrackCommand}" Style="{StaticResource ToggleButton}">
+                            <Button.Content>
+                                <Image Source="pack://application:,,,/Images/minus.png" />
+                            </Button.Content>
+                        </Button>
                         <userControls:TrackView Grid.Column="1" DataContext="{Binding TrackViewModel}" HorizontalAlignment="Stretch" />
                     </Grid>
                 </DataTemplate>
@@ -46,7 +50,11 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
-                        <Button Content="+" Command="{Binding AddTrackCommand}" />
+                        <Button Command="{Binding AddTrackCommand}" Style="{StaticResource ToggleButton}">
+                            <Button.Content>
+                                <Image Source="pack://application:,,,/Images/plus.png" />
+                            </Button.Content>
+                        </Button>
                         <userControls:TrackView Grid.Column="1" DataContext="{Binding TrackViewModel}" HorizontalAlignment="Stretch" />
                     </Grid>
                 </DataTemplate>

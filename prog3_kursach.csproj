@@ -16,10 +16,12 @@
     <None Remove="Images\logo.jpg" />
     <None Remove="Images\maximize.png" />
     <None Remove="Images\minimize.png" />
+    <None Remove="Images\minus.png" />
     <None Remove="Images\not-like.png" />
     <None Remove="Images\pause.png" />
     <None Remove="Images\play-player.png" />
     <None Remove="Images\play-track-view.png" />
+    <None Remove="Images\plus.png" />
     <None Remove="Images\search.png" />
     <None Remove="Images\volume.png" />
   </ItemGroup>
@@ -39,10 +41,12 @@
     <Resource Include="Images\logo.jpg" />
     <Resource Include="Images\maximize.png" />
     <Resource Include="Images\minimize.png" />
+    <Resource Include="Images\minus.png" />
     <Resource Include="Images\not-like.png" />
     <Resource Include="Images\pause.png" />
     <Resource Include="Images\play-player.png" />
     <Resource Include="Images\play-track-view.png" />
+    <Resource Include="Images\plus.png" />
     <Resource Include="Images\search.png" />
     <Resource Include="Images\volume.png" />
   </ItemGroup>

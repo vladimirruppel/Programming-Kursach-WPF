@@ -18,6 +18,7 @@ namespace prog3_kursach.ViewModel
             {
                 playlist = value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(IsAdded));
                 tracks = Tracks;
             }
         }

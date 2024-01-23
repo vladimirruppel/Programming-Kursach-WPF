@@ -8,20 +8,8 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="MyPlaylistsPage">
-    <Grid>
-        <ListBox Name="listBoxTracks" ItemsSource="{Binding Playlists}">
-            <ListBox.ItemContainerStyle>
-                <Style TargetType="ListBoxItem">
-                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                    <Setter Property="Margin" Value="0,0,0,15" />
-                </Style>
-            </ListBox.ItemContainerStyle>
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <userControls:PlaylistView />
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-    </Grid>
+    <StackPanel Orientation="Vertical">
+        <TextBlock Text="Мои плейлисты" Style="{StaticResource Header}" />
+        <userControls:PlaylistsListBox DataContext="{Binding Playlists}" />
+    </StackPanel>
 </Page>

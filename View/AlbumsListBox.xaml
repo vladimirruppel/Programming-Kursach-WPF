@@ -7,7 +7,7 @@
              xmlns:userControls="clr-namespace:prog3_kursach.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <ListBox Name="listBoxAlbums" ItemsSource="{Binding}">
+    <ListBox Name="listBoxAlbums" ItemsSource="{Binding}" BorderThickness="0">
         <ListBox.ItemContainerStyle>
             <Style TargetType="ListBoxItem">
                 <Setter Property="HorizontalAlignment" Value="Stretch"/>
